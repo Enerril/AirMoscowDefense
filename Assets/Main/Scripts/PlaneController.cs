@@ -58,7 +58,7 @@ public class PlaneController : MonoBehaviour
 
         //transform.Rotate(transform.forward * roll * responseModifier * Time.deltaTime);
         transform.Rotate(Vector3.forward, -roll * responseModifier * Time.deltaTime);
-        transform.Rotate(Vector3.up, -yaw * responseModifier * Time.deltaTime);
+        transform.Rotate(Vector3.up, yaw * responseModifier * Time.deltaTime);
 
         transform.Rotate(Vector3.right, pitch * responseModifier * Time.deltaTime);
         //cinemachineBrain.ManualUpdate();
