@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1112990689589171662}
   - component: {fileID: 8960032261309378308}
-  - component: {fileID: 4787204953450697608}
+  - component: {fileID: 335829648}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4787204953450697608
+--- !u!114 &335829648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,9 +59,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damping: {x: 0, y: 0, z: 0}
   ShoulderOffset: {x: 0, y: 0, z: 0}
-  VerticalArmLength: 0.4
+  VerticalArmLength: 0.05
   CameraSide: 1
-  CameraDistance: 2
+  CameraDistance: 0.2
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0
@@ -121,10 +121,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 1
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1388086410091357627, guid: 60ba36065e86583429deae22e0f5559a,
-    type: 3}
-  m_Follow: {fileID: 1388086410091357627, guid: 60ba36065e86583429deae22e0f5559a,
-    type: 3}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -150,11 +148,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8445826941864916421}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Offset: {x: 0, y: -0.31, z: 1.68}
+  m_Offset: {x: 0, y: 0, z: 0}
   m_ApplyAfter: 1
   m_PreserveComposition: 0

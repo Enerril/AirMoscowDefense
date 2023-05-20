@@ -27,11 +27,13 @@ public class CameraController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4)) index = 3;
 
         target = povs[index].position;
+
+        transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed * mult);
+        transform.forward = povs[index].forward;
     }
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position,target,Time.deltaTime*speed*mult);
-        transform.forward = povs[index].forward;
+     
     }
 }

@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5951f36c4a1532945b4eb184d874b3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Vcam: {fileID: 0}
-  Fcam: {fileID: 0}
+  Vcam: {fileID: 296869008125143927, guid: 63556b584bef4d94383a8929d24d295a, type: 3}
+  Fcam: {fileID: 8272932116693818517, guid: cad671648953f804aa008707bfa20703, type: 3}
 --- !u!114 &1842672854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,3 +262,6 @@ MonoBehaviour:
   forwardSpeed: 25
   strafeSpeed: 7.5
   hoverSpeed: 5
+  lookRateSpeed: 90
+  rollSpeed: 90
+  rollAcceleration: 3.5
