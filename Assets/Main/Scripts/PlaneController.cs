@@ -37,6 +37,9 @@ public class PlaneController : MonoBehaviour
     void Update()
     {
         HandleInputs();
+
+        //Debug.Log(throttle);
+
     }
 
 
@@ -60,10 +63,9 @@ public class PlaneController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log(throttle);
         rb.AddForce(transform.forward * maxThrust * throttle);
         rb.AddTorque(transform.up * yaw * responseModifier);
-        rb.AddTorque(transform.right * pitch*responseModifier);
-        rb.AddTorque(-transform.forward * roll*responseModifier);
+        rb.AddTorque(transform.right * pitch * responseModifier);
+        rb.AddTorque(-transform.forward * roll * responseModifier);
     }
 }
