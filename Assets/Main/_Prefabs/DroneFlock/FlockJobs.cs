@@ -37,7 +37,7 @@ public struct FlockBulletJob : IJobParallelForTransform
         _BulletLiveTime[i] += deltaTime;
         var forwardDirection = transform.rotation * Vector3.back;   // this is a bit misleading and i don't quite know how it works but it works
         var forward = transform.position - forwardDirection;
-        transform.position = Vector3.MoveTowards(transform.position, forward, 50 * deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, forward, 120 * deltaTime);
 
     }
 
@@ -112,9 +112,9 @@ public struct FlockDroneJob : IJobParallelForTransform
 
         transform.rotation = (Quaternion.RotateTowards(transform.rotation, rotation, 75 * deltaTime));
         
-        transform.position = Vector3.MoveTowards(transform.position, forward, 15 * deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, forward, 80 * deltaTime);
 
-        if (Vector3.Distance(transform.position, targetPos) < 15)
+        if (Vector3.Distance(transform.position, targetPos) < 200)
         {
             _NeedNewRandomPositions[i] = true;
         }
@@ -193,7 +193,7 @@ public struct FlockDroneJob : IJobParallelForTransform
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, forward, 15 * deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, forward, 80 * deltaTime);
             //_ReloadTime[i] = 0;
         }
         
