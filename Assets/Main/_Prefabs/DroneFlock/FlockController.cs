@@ -13,6 +13,7 @@ public class FlockController : MonoBehaviour
 {
     [SerializeField] GameObject[] flock;
     [SerializeField]GameObject[] bullets;
+    [SerializeField] Transform playerTransofrm;
     CommonDrone[] commonDrones;
 
     //[SerializeField] GameObject humanDrone;
@@ -285,7 +286,14 @@ public class FlockController : MonoBehaviour
 
     private Vector3 GetRandomMovePointInSphere()
     {
-        return transform.position + UnityEngine.Random.insideUnitSphere * sphereSizeMult*droneAmount;
+        var pos = transform.position + UnityEngine.Random.insideUnitSphere * sphereSizeMult * droneAmount;
+
+        if (pos.y < 30)
+        {
+            pos.y = UnityEngine.Random.Range(30,150);
+        }
+
+        return pos;
     }
 
     void InstantJobValuesEvaluate()
@@ -450,6 +458,7 @@ public class FlockController : MonoBehaviour
         drone_JobHandle.Complete();
         bullets_JobHandle.Complete();
         InstantJobValuesEvaluate();
+        //transform.position = playerTransofrm.position;
     }
 
     private void SpawnDrones()
@@ -459,7 +468,7 @@ public class FlockController : MonoBehaviour
         {
             spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * droneAmount/2* sphereSizeMult;
             var g= Reds.Spawn(spawnPos, Quaternion.identity);
-            var gc = g.GetComponent<CommonDrone>();
+            var gc = g.GetComponent<CommonDrone>(); 
             gc.ID = droneCounter;
             gc.MyTarget = this.gameObject;
             gc.randomSeed = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100000)); 
