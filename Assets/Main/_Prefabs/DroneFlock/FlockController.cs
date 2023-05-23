@@ -458,7 +458,7 @@ public class FlockController : MonoBehaviour
         drone_JobHandle.Complete();
         bullets_JobHandle.Complete();
         InstantJobValuesEvaluate();
-        transform.position = playerTransofrm.position+playerTransofrm.forward *500;
+        transform.position = playerTransofrm.position+playerTransofrm.forward *300;
        // Debug.DrawLine(transform.position, playerTransofrm.forward * 100,Color.green);
     }
 

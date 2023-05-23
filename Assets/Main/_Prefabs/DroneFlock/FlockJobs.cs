@@ -37,7 +37,7 @@ public struct FlockBulletJob : IJobParallelForTransform
         _BulletLiveTime[i] += deltaTime;
         var forwardDirection = transform.rotation * Vector3.back;   // this is a bit misleading and i don't quite know how it works but it works
         var forward = transform.position - forwardDirection;
-        transform.position = Vector3.MoveTowards(transform.position, forward, 120 * deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, forward, 160 * deltaTime);
 
     }
 
