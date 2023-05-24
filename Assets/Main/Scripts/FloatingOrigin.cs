@@ -2,10 +2,13 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-
+public delegate void OnOriginMoved(Vector3 offset);
 [RequireComponent(typeof(Camera))]
 public class FloatingOrigin : MonoBehaviour
 {
+    public OnOriginMoved _OnOriginMoved;
+
+
     public float threshold = 100.0f;
     //public LevelLayoutGenerator layoutGenerator;
 
@@ -33,6 +36,7 @@ public class FloatingOrigin : MonoBehaviour
             */
             Vector3 originDelta = Vector3.zero - cameraPosition;
             //layoutGenerator.UpdateSpawnOrigin(originDelta);
+            _OnOriginMoved?.Invoke(originDelta);
             Debug.Log("recentering, origin delta = " + originDelta);
         }
 

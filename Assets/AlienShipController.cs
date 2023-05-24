@@ -7,7 +7,8 @@ using UnityEngine;
 public class AlienShipController : MonoBehaviour
 {
     [SerializeField] GameObject player;
-
+    Camera cam;
+    FloatingOrigin floatingOrigin;
     [SerializeField] Transform playerTransform;
     [SerializeField] float maxHealth;
     [SerializeField] float currentHealth;
@@ -33,6 +34,11 @@ public class AlienShipController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
+        floatingOrigin=cam.GetComponent<FloatingOrigin>();
+        floatingOrigin._OnOriginMoved += AdjustPatrolVectors;
+
+
         currentHealth = maxHealth;
         isAlive = true;
         lerpVTarget = 1;
@@ -47,7 +53,13 @@ public class AlienShipController : MonoBehaviour
         Invoke("PatrolStart", Random.Range(0.5f, 2.5f));
 
     }
-    
+
+    void AdjustPatrolVectors(Vector3 offset)
+    {
+        upPoint+=offset;
+        downPoint+=offset;
+    }
+
     void PatrolStart()
     {
         StartCoroutine(Patrol());
@@ -82,7 +94,7 @@ public class AlienShipController : MonoBehaviour
 
     
 
-    void Update()
+    void LateUpdate()
     {
         // lerpVTarget = lerpVTarget == 0 ? 1 : 0;
 
@@ -137,9 +149,12 @@ public class AlienShipController : MonoBehaviour
 
 
     }
-    
-    
 
+
+    private void OnDestroy()
+    {
+        floatingOrigin._OnOriginMoved -= AdjustPatrolVectors;
+    }
 
 
 
