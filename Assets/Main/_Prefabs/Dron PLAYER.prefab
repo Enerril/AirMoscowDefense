@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 8744514969568540290}
   - component: {fileID: 5689481868638484775}
   - component: {fileID: 7571095044533784045}
+  - component: {fileID: 3847471504603420369}
+  - component: {fileID: 3847471504603420368}
+  - component: {fileID: 3847471504603420367}
   m_Layer: 0
   m_Name: Dron PLAYER
   m_TagString: Untagged
@@ -83,3 +86,60 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &3847471504603420369
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219371291929979960}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &3847471504603420368
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219371291929979960}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.011674276, y: 0.0052733347, z: 0.009390712}
+  m_Center: {x: 0.0000031683594, y: 0.00047010975, z: -0.000016336795}
+--- !u!114 &3847471504603420367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219371291929979960}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66031ead0b22f6c4bb06d097a90bb968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throttleIncrement: 0.1
+  maxThrust: 100
+  responsiveness: 2
+  cinemachineBrain: {fileID: 0}
+  planeMass: 400
+  throttle: 0
+  roll: 0
+  pitch: 0
+  yaw: 0
+  speedMult: 5
+  forwardSpeed: 25
+  strafeSpeed: 7.5
+  hoverSpeed: 5
+  lookRateSpeed: 90
+  rollSpeed: 90
+  rollAcceleration: 3.5

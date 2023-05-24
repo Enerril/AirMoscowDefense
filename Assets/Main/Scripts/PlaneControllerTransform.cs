@@ -27,7 +27,7 @@ public class PlaneControllerTransform : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         lookInput.x = Input.mousePosition.x;
@@ -44,7 +44,7 @@ public class PlaneControllerTransform : MonoBehaviour
 
         activeForwardSpeed =Mathf.Lerp(activeForwardSpeed, Input.GetAxisRaw("Vertical") * forwardSpeed,forwardAcceleration*Time.deltaTime);
         activeStrafeSpeed =Mathf.Lerp(activeStrafeSpeed, Input.GetAxisRaw("Horizontal") * strafeSpeed,strafeAcceleration*Time.deltaTime);
-        activeHoverSpeed=Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Hover")*hoverSpeed, hoverAcceleration*Time.deltaTime);
+        activeHoverSpeed=Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Pitch")*hoverSpeed, hoverAcceleration*Time.deltaTime);
 
 
 
