@@ -47,8 +47,8 @@ MonoBehaviour:
   flock: []
   bullets: []
   playerTransofrm: {fileID: 0}
-  droneAmount: 200
-  sphereSizeMult: 2
+  droneAmount: 30
+  sphereSizeMult: 8
   Reds: {fileID: 6574993192419755761, guid: 3125440f8c683164b8f4edafb908435b, type: 3}
   Blues: {fileID: 765163892750289679, guid: c464aa3d2bc55c84b909439af12162fd, type: 3}
   HumanBullets: {fileID: 5065771563646626413, guid: 3fea1b261e26b554c8752288980e3297,

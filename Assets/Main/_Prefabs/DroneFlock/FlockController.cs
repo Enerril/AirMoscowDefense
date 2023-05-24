@@ -53,9 +53,23 @@ public class FlockController : MonoBehaviour
     [SerializeField] private int maxBulletsInSpray=10;
     [Range(0.01f,0.5f)]
     [SerializeField] private float droneAccuracyOffset=0.03f;
+
+    bool FlockActive;
     // Start is called before the first frame update
     void Start()
     {
+
+        Reds = Instantiate(Reds);
+        Blues = Instantiate(Blues);
+        HumanBullets = Instantiate(HumanBullets);
+        AlienBullets = Instantiate(AlienBullets);
+
+        StartCoroutine(FlockSetup());
+    }
+
+    IEnumerator FlockSetup()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 2f));
         DroneInitialSetup();
         //if (bulletsAmount > 5000) bulletsAmount = 5000;
         bulletsAmount = droneAmount * 20;
@@ -63,17 +77,17 @@ public class FlockController : MonoBehaviour
 
         for (int i = 0; i < bulletsAmount; i++)
         {
-          
+
             var g = HumanBullets.Spawn(transform.position, Quaternion.identity);
             bullets[bulletCounter] = g;
             bulletCounter++;
-                
-                    
+
+
             var k = AlienBullets.Spawn(transform.position, Quaternion.identity);
             bullets[bulletCounter] = k;
             bulletCounter++;
-            
-           
+
+
         }
         for (int i = 0; i < bullets.Length; i++)
         {
@@ -81,7 +95,7 @@ public class FlockController : MonoBehaviour
         }
 
 
-        bulletLiveTime =new NativeArray<float> (bulletsAmount * 2, Allocator.Persistent);
+        bulletLiveTime = new NativeArray<float>(bulletsAmount * 2, Allocator.Persistent);
         transformAccessArrayBullets = new TransformAccessArray(bulletsAmount * 2);
         for (int i = 0; i < bulletsAmount * 2; i++)
         {
@@ -89,6 +103,8 @@ public class FlockController : MonoBehaviour
         }
         canShoot = new bool[droneAmount * 2];
         reloadTime = new float[droneAmount * 2];
+
+        FlockActive = true;
     }
 
     private void DroneInitialSetup()
@@ -211,34 +227,38 @@ public class FlockController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PrepareDroneJobData();
-
-        FlockBulletJob flockBulletJob = new FlockBulletJob()
+        if (FlockActive)
         {
-            _BulletLiveTime = bulletLiveTime,
-            _RandomGen = randomGens,
-            //_targetPosition = myTargetPos,
-            deltaTime = Time.deltaTime
+            PrepareDroneJobData();
+
+            FlockBulletJob flockBulletJob = new FlockBulletJob()
+            {
+                _BulletLiveTime = bulletLiveTime,
+                _RandomGen = randomGens,
+                //_targetPosition = myTargetPos,
+                deltaTime = Time.deltaTime
 
 
-        };
-        bullets_JobHandle = flockBulletJob.Schedule(transformAccessArrayBullets);
+            };
+            bullets_JobHandle = flockBulletJob.Schedule(transformAccessArrayBullets);
 
-        FlockDroneJob flockDroneJob = new FlockDroneJob()
-        {
-            //_targetForward = myTargetForwardPos,
-            _targetPosition = myTargetPos,
-            //_MyForward = myForwardPos,
-            _RandomGen = randomGens,
-            _DroneStatus = droneStatus,
-            _NeedNewRandomPositions = NeedNewRandomPositions,
-            //_BulletsShot=bulletsShot,
-           // _ReloadTime=reloadTime,
-            timeTime = Time.time,
-            deltaTime = Time.deltaTime
+            FlockDroneJob flockDroneJob = new FlockDroneJob()
+            {
+                //_targetForward = myTargetForwardPos,
+                _targetPosition = myTargetPos,
+                //_MyForward = myForwardPos,
+                _RandomGen = randomGens,
+                _DroneStatus = droneStatus,
+                _NeedNewRandomPositions = NeedNewRandomPositions,
+                //_BulletsShot=bulletsShot,
+                // _ReloadTime=reloadTime,
+                timeTime = Time.time,
+                deltaTime = Time.deltaTime
 
-        };
-        drone_JobHandle = flockDroneJob.Schedule(transformAccessArrayDrones);
+            };
+            drone_JobHandle = flockDroneJob.Schedule(transformAccessArrayDrones);
+        }
+       
        
     }
 
@@ -288,9 +308,9 @@ public class FlockController : MonoBehaviour
     {
         var pos = transform.position + UnityEngine.Random.insideUnitSphere * sphereSizeMult * droneAmount;
 
-        if (pos.y < 30)
+        if (pos.y < 30 || pos.y>350)
         {
-            pos.y = UnityEngine.Random.Range(30,150);
+            pos.y = UnityEngine.Random.Range(30,350);
         }
 
         return pos;
@@ -452,13 +472,16 @@ public class FlockController : MonoBehaviour
         m_NormalizeJobHandle.Complete();
         */
         // float startTime = Time.realtimeSinceStartup;
-
+        if (FlockActive)
+        {
+            drone_JobHandle.Complete();
+            bullets_JobHandle.Complete();
+            InstantJobValuesEvaluate();
+            //transform.position = playerTransofrm.position + playerTransofrm.forward * 300;
+        }
         //drone_JobHandle.Complete();
         //Debug.Log(((Time.realtimeSinceStartup - startTime) * 1000f) + " ms"+" JOBS COMPLETE ON FRAME");
-        drone_JobHandle.Complete();
-        bullets_JobHandle.Complete();
-        InstantJobValuesEvaluate();
-        transform.position = playerTransofrm.position+playerTransofrm.forward *300;
+       
        // Debug.DrawLine(transform.position, playerTransofrm.forward * 100,Color.green);
     }
 

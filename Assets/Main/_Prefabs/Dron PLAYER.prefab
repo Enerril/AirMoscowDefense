@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 3847471504603420369}
   - component: {fileID: 3847471504603420368}
   - component: {fileID: 3847471504603420367}
+  - component: {fileID: 3847471504603420372}
   m_Layer: 0
   m_Name: Dron PLAYER
-  m_TagString: Untagged
+  m_TagString: MainPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +123,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8219371291929979960}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66031ead0b22f6c4bb06d097a90bb968, type: 3}
   m_Name: 
@@ -137,6 +138,24 @@ MonoBehaviour:
   pitch: 0
   yaw: 0
   speedMult: 5
+  forwardSpeed: 25
+  strafeSpeed: 7.5
+  hoverSpeed: 5
+  lookRateSpeed: 90
+  rollSpeed: 90
+  rollAcceleration: 3.5
+--- !u!114 &3847471504603420372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219371291929979960}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0230f1e041b29f429f9b179b5485572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   forwardSpeed: 25
   strafeSpeed: 7.5
   hoverSpeed: 5
