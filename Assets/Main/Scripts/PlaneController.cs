@@ -104,4 +104,9 @@ public class PlaneController : MonoBehaviour
 
     }
     */
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("DRONE CRASHED");
+    }
 }
