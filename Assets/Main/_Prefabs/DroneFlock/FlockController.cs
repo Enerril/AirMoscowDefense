@@ -54,6 +54,7 @@ public class FlockController : MonoBehaviour
     [Range(0.01f,0.5f)]
     [SerializeField] private float droneAccuracyOffset=0.03f;
 
+    [SerializeField] bool DisableFlock;
     bool FlockActive;
     // Start is called before the first frame update
     void Start()
@@ -104,7 +105,7 @@ public class FlockController : MonoBehaviour
         canShoot = new bool[droneAmount * 2];
         reloadTime = new float[droneAmount * 2];
 
-        FlockActive = true;
+        if(!DisableFlock) FlockActive = true;
     }
 
     private void DroneInitialSetup()
