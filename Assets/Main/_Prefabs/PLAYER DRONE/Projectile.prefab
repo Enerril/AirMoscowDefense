@@ -237,4 +237,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  deathTime: 2
+  deathTime: 3

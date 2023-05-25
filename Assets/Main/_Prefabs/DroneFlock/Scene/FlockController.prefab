@@ -56,6 +56,7 @@ MonoBehaviour:
   AlienBullets: {fileID: 5962534651040927476, guid: 10b8249d55fe7dc428e07418faeaab6a,
     type: 3}
   rateOfFire: 0.1
-  longReloadDelay: 3
+  longReloadDelay: 1.5
   maxBulletsInSpray: 10
   droneAccuracyOffset: 0.05
+  DisableFlock: 0

@@ -53,7 +53,9 @@ public class FlockController : MonoBehaviour
     [SerializeField] private float droneAccuracyOffset = 0.03f;
 
     [SerializeField] private bool DisableFlock;
+    [SerializeField] float sleepDistance=700f;
     private bool FlockActive;
+    bool flockInitialStart;
 
     // Start is called before the first frame update
     private void Start()
@@ -98,7 +100,12 @@ public class FlockController : MonoBehaviour
         canShoot = new bool[droneAmount * 2];
         reloadTime = new float[droneAmount * 2];
 
-        if (!DisableFlock) FlockActive = true;
+        if (!DisableFlock)
+        {
+            FlockActive = true;
+            flockInitialStart = true;
+        }
+        
     }
 
     private void DroneInitialSetup()
@@ -212,7 +219,7 @@ public class FlockController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (FlockActive)
+        if (FlockActive && flockInitialStart)
         {
             PrepareDroneJobData();
 
@@ -239,7 +246,27 @@ public class FlockController : MonoBehaviour
                 deltaTime = Time.deltaTime
             };
             drone_JobHandle = flockDroneJob.Schedule(transformAccessArrayDrones);
+
+
+            //Debug.Log(Vector3.Distance(this.transform.position, playerTransofrm.position)+ " DISTANCE");
         }
+        if (sleepDistance == 0)
+        {
+
+        }
+        else
+        {
+            if (Vector3.Distance(this.transform.position, playerTransofrm.position) > sleepDistance)
+            {
+                FlockActive = false;
+
+            }
+            else
+            {
+                FlockActive = true;
+            }
+        }
+      
     }
 
     private void PrepareDroneJobData()
