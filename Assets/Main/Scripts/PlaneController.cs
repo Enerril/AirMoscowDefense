@@ -14,7 +14,7 @@ public class PlaneController : MonoBehaviour
     [Header("in-game values!")]
     [SerializeField] private float throttle;
     [SerializeField] private float roll;
-    [SerializeField] private float pitch;
+    [SerializeField] private float pitch; 
     [SerializeField] private float yaw;
     [SerializeField] private float speedMult=1;
 

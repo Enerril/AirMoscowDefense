@@ -9739,6 +9739,7 @@ GameObject:
   - component: {fileID: 5531377149884871964}
   - component: {fileID: 5531377149869666398}
   - component: {fileID: 5531377149869558270}
+  - component: {fileID: -3149003449033176397}
   m_Layer: 0
   m_Name: MuzzelFlash
   m_TagString: Untagged
@@ -9755,8 +9756,8 @@ Transform:
   m_GameObject: {fileID: 5531377149885163836}
   m_LocalRotation: {x: 8.792485e-15, y: 1, z: -0.000000029802354, w: 0.000000295028}
   m_LocalPosition: {x: -0, y: 0.14, z: 0.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5531377149884871960}
   - {fileID: 5531377149884871966}
@@ -9772,14 +9773,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5531377149885163836}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 0.05
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -14577,6 +14578,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-3149003449033176397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5531377149885163836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffac6d5d4743e514f9884afe64a4d255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeathDelay: 0.1
 --- !u!1 &5531377149885163838
 GameObject:
   m_ObjectHideFlags: 0

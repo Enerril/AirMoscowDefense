@@ -9,16 +9,17 @@ public class Shooting : MonoBehaviour
     [SerializeField] float offsetAccuracy=1f;
     
     [SerializeField] LeanGameObjectPool explosionsPool;
-    [SerializeField] GameObject muzzle;
+    [SerializeField] LeanGameObjectPool muzzlePool;
     [SerializeField] LeanGameObjectPool projectilePool;
     float timeSinceLastShot;
-    ParticleSystem muzzlePS;
+    //ParticleSystem muzzlePS;
     GameObject proj;
+    GameObject muzzle;
 
     // Start is called before the first frame update
     void Start()
     {
-        muzzlePS=muzzle.GetComponent<ParticleSystem>();
+        //muzzlePS=muzzle.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class Shooting : MonoBehaviour
             //explosionsPool.Spawn();
             //muzzlePool.Spawn();
             proj=projectilePool.Spawn(transform.position,Quaternion.identity,null);
-
+            muzzle = muzzlePool.Spawn(transform.position, Quaternion.identity,this.transform);
            // proj.transform.rotation=transform.rotation; - working
 
             float randomX = Random.Range(-offsetAccuracy, offsetAccuracy);
@@ -42,17 +43,24 @@ public class Shooting : MonoBehaviour
             Quaternion oldRot = transform.rotation;
             Quaternion newRot = new Quaternion(oldRot.x + randomX, oldRot.y + randomY, oldRot.z + randomZ, oldRot.w + randomW);
             proj.transform.rotation = newRot;
+            muzzle.transform.rotation = newRot;
             //proj.transform.rotation.x += UnityEngine.Random.Range(-offsetAccuracy, -offsetAccuracy);
 
             timeSinceLastShot = 0;
-            muzzlePS.Play();
+           
         }
-
+        else
+        {
+            //Debug.Log("HERE");
+           
+        }
         
     }
 
+   
+
     private void LateUpdate()
     {
-        muzzlePS.Stop();
+      
     }
 }

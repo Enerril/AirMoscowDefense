@@ -5,9 +5,12 @@ using Lean.Pool;
 public class TimedLife : MonoBehaviour
 {
     WaitForSeconds seconds = new WaitForSeconds(1f);
+    [SerializeField] float DeathDelay=1f;
     // Start is called before the first frame update
     void Start()
     {
+
+        seconds = new WaitForSeconds(DeathDelay);
         StartCoroutine(Die());
     }
     private void OnEnable()
