@@ -1,41 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Lean.Pool;
-using UnityEngine.Jobs;
-using System.Net;
-using Unity.Jobs;
-using Unity.Mathematics;
+using System.Collections;
 using Unity.Collections;
-
+using Unity.Jobs;
+using UnityEngine;
+using UnityEngine.Jobs;
 
 public class FlockController : MonoBehaviour
 {
-    [SerializeField] GameObject[] flock;
-    [SerializeField]GameObject[] bullets;
-    [SerializeField] Transform playerTransofrm;
-    CommonDrone[] commonDrones;
+    [SerializeField] private GameObject[] flock;
+    [SerializeField] private GameObject[] bullets;
+    [SerializeField] private Transform playerTransofrm;
+    private CommonDrone[] commonDrones;
 
     //[SerializeField] GameObject humanDrone;
     //[SerializeField] GameObject alienDrone;
-    [SerializeField] int droneAmount;
-    int bulletsAmount;
-    [SerializeField] int sphereSizeMult=4;
-    int droneCounter;
-    int bulletCounter;
-    int maxHunters; //should not exceed more than 45% of total amount of drones... Want to have some free wanderers
-    Vector3 spawnPos;
-    Vector3 randomPointInsideSphere;
- 
-    [SerializeField] LeanGameObjectPool Reds;
-    [SerializeField] LeanGameObjectPool Blues;
-    [SerializeField] LeanGameObjectPool HumanBullets;
-    [SerializeField] LeanGameObjectPool AlienBullets;
-    JobHandle drone_JobHandle;
-    JobHandle bullets_JobHandle;
+    [SerializeField] private int droneAmount;
 
-    TransformAccessArray transformAccessArrayDrones;
-    TransformAccessArray transformAccessArrayBullets;
+    private int bulletsAmount;
+    [SerializeField] private int sphereSizeMult = 4;
+    private int droneCounter;
+    private int bulletCounter;
+    private int maxHunters; //should not exceed more than 45% of total amount of drones... Want to have some free wanderers
+    private Vector3 spawnPos;
+    private Vector3 randomPointInsideSphere;
+
+    [SerializeField] private LeanGameObjectPool Reds;
+    [SerializeField] private LeanGameObjectPool Blues;
+    [SerializeField] private LeanGameObjectPool HumanBullets;
+    [SerializeField] private LeanGameObjectPool AlienBullets;
+    private JobHandle drone_JobHandle;
+    private JobHandle bullets_JobHandle;
+
+    private TransformAccessArray transformAccessArrayDrones;
+    private TransformAccessArray transformAccessArrayBullets;
 
     public NativeArray<Vector3> myTargetPos;
     public NativeArray<Vector3> myTargetForwardPos;
@@ -43,23 +40,24 @@ public class FlockController : MonoBehaviour
     public NativeArray<bool> NeedNewRandomPositions;
     public NativeArray<Unity.Mathematics.Random> randomGens;
     public NativeArray<int> droneStatus;
-    float[] reloadTime;
+    private float[] reloadTime;
     public NativeArray<int> bulletsShot;    // basically we spawn N bullets after which we increase reload to from ~300ms to 15sec.
-    bool[] canShoot;
+    private bool[] canShoot;
     public NativeArray<float> bulletLiveTime;
-    
-    [SerializeField] private float rateOfFire=0.1f;
-    [SerializeField] private float longReloadDelay=10f;
-    [SerializeField] private int maxBulletsInSpray=10;
-    [Range(0.01f,0.5f)]
-    [SerializeField] private float droneAccuracyOffset=0.03f;
 
-    [SerializeField] bool DisableFlock;
-    bool FlockActive;
+    [SerializeField] private float rateOfFire = 0.1f;
+    [SerializeField] private float longReloadDelay = 10f;
+    [SerializeField] private int maxBulletsInSpray = 10;
+
+    [Range(0.01f, 0.5f)]
+    [SerializeField] private float droneAccuracyOffset = 0.03f;
+
+    [SerializeField] private bool DisableFlock;
+    private bool FlockActive;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
         Reds = Instantiate(Reds);
         Blues = Instantiate(Blues);
         HumanBullets = Instantiate(HumanBullets);
@@ -68,7 +66,7 @@ public class FlockController : MonoBehaviour
         StartCoroutine(FlockSetup());
     }
 
-    IEnumerator FlockSetup()
+    private IEnumerator FlockSetup()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 2f));
         DroneInitialSetup();
@@ -78,23 +76,18 @@ public class FlockController : MonoBehaviour
 
         for (int i = 0; i < bulletsAmount; i++)
         {
-
             var g = HumanBullets.Spawn(transform.position, Quaternion.identity);
             bullets[bulletCounter] = g;
             bulletCounter++;
 
-
             var k = AlienBullets.Spawn(transform.position, Quaternion.identity);
             bullets[bulletCounter] = k;
             bulletCounter++;
-
-
         }
         for (int i = 0; i < bullets.Length; i++)
         {
             LeanPool.Despawn(bullets[i]);
         }
-
 
         bulletLiveTime = new NativeArray<float>(bulletsAmount * 2, Allocator.Persistent);
         transformAccessArrayBullets = new TransformAccessArray(bulletsAmount * 2);
@@ -105,7 +98,7 @@ public class FlockController : MonoBehaviour
         canShoot = new bool[droneAmount * 2];
         reloadTime = new float[droneAmount * 2];
 
-        if(!DisableFlock) FlockActive = true;
+        if (!DisableFlock) FlockActive = true;
     }
 
     private void DroneInitialSetup()
@@ -121,8 +114,8 @@ public class FlockController : MonoBehaviour
         NeedNewRandomPositions = new NativeArray<bool>(droneAmount * 2, Allocator.Persistent);
         droneStatus = new NativeArray<int>(droneAmount * 2, Allocator.Persistent);
         transformAccessArrayDrones = new TransformAccessArray(droneCounter);
-        
-        bulletsShot= new NativeArray<int>(droneAmount * 2, Allocator.Persistent);
+
+        bulletsShot = new NativeArray<int>(droneAmount * 2, Allocator.Persistent);
 
         for (int i = 0; i < droneCounter; i++)
         {
@@ -159,7 +152,6 @@ public class FlockController : MonoBehaviour
                 {
                     commonDrones[i].droneStatus = 2;
                 }
-
             }
             else
             {
@@ -176,7 +168,6 @@ public class FlockController : MonoBehaviour
                     commonDrones[i].MyTarget = flock[k];
                     break;
                 }
-
             }
             */
         }
@@ -185,21 +176,16 @@ public class FlockController : MonoBehaviour
         {
             if (commonDrones[i].droneStatus == 1)
             {
-                // look for available target for hunter drone    
+                // look for available target for hunter drone
                 for (int j = 0; j < droneCounter; j++)
                 {
-
                     if (commonDrones[j].droneStatus == 2 && commonDrones[j].HaveAttacker == false && commonDrones[i].MyTeamID != commonDrones[j].MyTeamID)
                     {
                         commonDrones[i].MyTarget = flock[j];
                         commonDrones[j].HaveAttacker = true;
                         break;
                     }
-
-
                 }
-
-
             }
             else if (commonDrones[i].droneStatus == 2)
             {
@@ -207,7 +193,6 @@ public class FlockController : MonoBehaviour
                 commonDrones[i].RandomPosInsideSphere = GetRandomMovePointInSphere();
                 //commonDrones[i].NeedNewRandomPosition = false;
             }
-
         }
         for (int i = 0; i < droneCounter; i++)
         {
@@ -216,7 +201,6 @@ public class FlockController : MonoBehaviour
                 commonDrones[i].droneStatus = 2;    //failed to find target. switch to wanderer
                 huntersCounter--;
             }
-
         }
         //Debug.Log(huntersCounter + " active hunters left after searching target");
         for (int i = 0; i < droneCounter; i++)
@@ -226,7 +210,7 @@ public class FlockController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (FlockActive)
         {
@@ -238,8 +222,6 @@ public class FlockController : MonoBehaviour
                 _RandomGen = randomGens,
                 //_targetPosition = myTargetPos,
                 deltaTime = Time.deltaTime
-
-
             };
             bullets_JobHandle = flockBulletJob.Schedule(transformAccessArrayBullets);
 
@@ -255,12 +237,9 @@ public class FlockController : MonoBehaviour
                 // _ReloadTime=reloadTime,
                 timeTime = Time.time,
                 deltaTime = Time.deltaTime
-
             };
             drone_JobHandle = flockDroneJob.Schedule(transformAccessArrayDrones);
         }
-       
-       
     }
 
     private void PrepareDroneJobData()
@@ -270,15 +249,11 @@ public class FlockController : MonoBehaviour
             if (commonDrones[i].droneStatus == 1)
             {
                 myTargetPos[i] = commonDrones[i].MyTarget.transform.position;
-
             }
             else if (commonDrones[i].droneStatus == 2)
             {
                 myTargetPos[i] = commonDrones[i].RandomPosInsideSphere;
-
             }
-
-
 
             //myTargetForwardPos[i] = commonDrones[i].MyTarget.transform.localToWorldMatrix.MultiplyVector(transform.forward);
 
@@ -286,13 +261,8 @@ public class FlockController : MonoBehaviour
             // myTargetForwardPos[i] = commonDrones[i].MyTarget.transform.position + commonDrones[i].MyTarget.transform.forward;
 
             //myForwardPos[i] = flock[i].transform.position + flock[i].transform.forward;
-
-
-
-
         }
 
-       
         /*
         for (int i = 0; i < droneCounter; i++)
         {
@@ -309,15 +279,15 @@ public class FlockController : MonoBehaviour
     {
         var pos = transform.position + UnityEngine.Random.insideUnitSphere * sphereSizeMult * droneAmount;
 
-        if (pos.y < 30 || pos.y>350)
+        if (pos.y < 30 || pos.y > 200)
         {
-            pos.y = UnityEngine.Random.Range(30,350);
+            pos.y = UnityEngine.Random.Range(30, 200);
         }
 
         return pos;
     }
 
-    void InstantJobValuesEvaluate()
+    private void InstantJobValuesEvaluate()
     {
         CheckForNewRandomPoint();
 
@@ -335,7 +305,6 @@ public class FlockController : MonoBehaviour
                 // Debug.Log("here 2");
                 if (commonDrones[i].MyTeamID == 1)
                 {
-
                     if (reloadTime[i] <= 0 && canShoot[i])
                     {
                         // Debug.Log(reloadTime[i] + "my reload time left", flock[i]);
@@ -348,7 +317,7 @@ public class FlockController : MonoBehaviour
 
                             var b = flock[i].transform.rotation;
 
-                            b.x = flock[i].transform.rotation.x * UnityEngine.Random.Range(1- droneAccuracyOffset, 1 + droneAccuracyOffset);
+                            b.x = flock[i].transform.rotation.x * UnityEngine.Random.Range(1 - droneAccuracyOffset, 1 + droneAccuracyOffset);
                             b.y = flock[i].transform.rotation.y * UnityEngine.Random.Range(1 - droneAccuracyOffset, 1 + droneAccuracyOffset);
                             b.z = flock[i].transform.rotation.z * UnityEngine.Random.Range(1 - droneAccuracyOffset, 1 + droneAccuracyOffset);
 
@@ -377,7 +346,6 @@ public class FlockController : MonoBehaviour
                             canShoot[i] = true;
                         }
                     }
-
                 }
                 else if (commonDrones[i].MyTeamID == 2)
                 {
@@ -413,7 +381,6 @@ public class FlockController : MonoBehaviour
                     }
                     else
                     {
-
                         // Debug.Log("my reload time is " + reloadTime[i]);
                         reloadTime[i] -= Time.deltaTime;
                         // Debug.Log("reload time left " + reloadTime[i]);
@@ -425,14 +392,7 @@ public class FlockController : MonoBehaviour
                         }
                     }
                 }
-
-
-
-
             }
-
-
-
         }
     }
 
@@ -440,7 +400,6 @@ public class FlockController : MonoBehaviour
     {
         for (int i = 0; i < bullets.Length; i++)
         {
-
             if (bullets[i].activeSelf == true)
             {
                 if (bulletLiveTime[i] > 2f)
@@ -456,14 +415,11 @@ public class FlockController : MonoBehaviour
     {
         for (int i = 0; i < droneCounter; i++)
         {
-
             if (NeedNewRandomPositions[i] == true)
             {
                 commonDrones[i].RandomPosInsideSphere = GetRandomMovePointInSphere();
                 NeedNewRandomPositions[i] = false;
-
             }
-
         }
     }
 
@@ -482,27 +438,24 @@ public class FlockController : MonoBehaviour
         }
         //drone_JobHandle.Complete();
         //Debug.Log(((Time.realtimeSinceStartup - startTime) * 1000f) + " ms"+" JOBS COMPLETE ON FRAME");
-       
-       // Debug.DrawLine(transform.position, playerTransofrm.forward * 100,Color.green);
+
+        // Debug.DrawLine(transform.position, playerTransofrm.forward * 100,Color.green);
     }
 
     private void SpawnDrones()
     {
-
         for (int i = 0; i < droneAmount; i++)
         {
-            spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * droneAmount/2* sphereSizeMult;
-            var g= Reds.Spawn(spawnPos, Quaternion.identity);
-            var gc = g.GetComponent<CommonDrone>(); 
+            spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * droneAmount / 2 * sphereSizeMult;
+            var g = Reds.Spawn(spawnPos, Quaternion.identity);
+            var gc = g.GetComponent<CommonDrone>();
             gc.ID = droneCounter;
             gc.MyTarget = this.gameObject;
-            gc.randomSeed = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100000)); 
+            gc.randomSeed = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100000));
             flock[droneCounter] = g;
             droneCounter++;
 
-
-
-            spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * droneAmount/2* sphereSizeMult;
+            spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * droneAmount / 2 * sphereSizeMult;
             var k = Blues.Spawn(spawnPos, Quaternion.identity);
             var kc = k.GetComponent<CommonDrone>();
             kc.ID = droneCounter;
@@ -511,10 +464,6 @@ public class FlockController : MonoBehaviour
             flock[droneCounter] = k;
             droneCounter++;
         }
-
-
-
-
     }
 
     private void OnDestroy()

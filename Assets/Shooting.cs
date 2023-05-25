@@ -6,7 +6,7 @@ public class Shooting : MonoBehaviour
 {
 
     [SerializeField] float fireDelay;
-    [SerializeField] Vector3 offsetAccuracy;
+    [SerializeField] float offsetAccuracy=1f;
     
     [SerializeField] LeanGameObjectPool explosionsPool;
     [SerializeField] GameObject muzzle;
@@ -31,7 +31,18 @@ public class Shooting : MonoBehaviour
             //explosionsPool.Spawn();
             //muzzlePool.Spawn();
             proj=projectilePool.Spawn(transform.position,Quaternion.identity,null);
-            proj.transform.rotation=transform.rotation;
+
+           // proj.transform.rotation=transform.rotation; - working
+
+            float randomX = Random.Range(-offsetAccuracy, offsetAccuracy);
+            float randomY = Random.Range(-offsetAccuracy, offsetAccuracy);
+            float randomZ = Random.Range(-offsetAccuracy, offsetAccuracy);
+            float randomW = Random.Range(-offsetAccuracy, offsetAccuracy);
+
+            Quaternion oldRot = transform.rotation;
+            Quaternion newRot = new Quaternion(oldRot.x + randomX, oldRot.y + randomY, oldRot.z + randomZ, oldRot.w + randomW);
+            proj.transform.rotation = newRot;
+            //proj.transform.rotation.x += UnityEngine.Random.Range(-offsetAccuracy, -offsetAccuracy);
 
             timeSinceLastShot = 0;
             muzzlePS.Play();

@@ -10,7 +10,7 @@ public class ProjectileController : MonoBehaviour
     LeanGameObjectPool poolExpl;
     // Start is called before the first frame update
     [SerializeField] float deathTime=2f;
-    WaitForSeconds waitSeconds=new WaitForSeconds(2f);
+    WaitForSeconds waitSeconds=new WaitForSeconds(3f);
     TrailRenderer trailRenderer;
 
     private void Awake()
