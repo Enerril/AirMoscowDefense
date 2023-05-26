@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5278d11d9502245b5cc174a196561b, type: 3}
   m_Name: SunnyDay
   m_EditorClassIdentifier: 
-  skyColor: {r: 0.2264151, g: 0.6028122, b: 0.9056604, a: 1}
-  horizonColor: {r: 0.9, g: 1, b: 0.98650056, a: 1}
+  skyColor: {r: 0.3401388, g: 0.6329309, b: 0.9150943, a: 1}
+  horizonColor: {r: 0.76383054, g: 0.83204335, b: 0.9056604, a: 1}
   groundColor: {r: 1, g: 1, b: 1, a: 1}
   horizonThickness: 1
   horizonExponent: 3
@@ -64,9 +64,9 @@ MonoBehaviour:
   moonLightColor: {r: 0, g: 0, b: 0, a: 0}
   moonLightIntensity: 0
   customCloudTexture: {fileID: 0}
-  enableHorizonCloud: 0
+  enableHorizonCloud: 1
   horizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
-  horizonCloudStartPosition: -0.1
+  horizonCloudStartPosition: -0.01
   horizonCloudEndPosition: 0.65
   horizonCloudSize: 4.91
   horizonCloudStep: 25
@@ -74,15 +74,15 @@ MonoBehaviour:
   enableOverheadCloud: 1
   overheadCloudColor: {r: 1, g: 1, b: 1, a: 0.5647059}
   overheadCloudAltitude: 1000
-  overheadCloudSize: 5.68
+  overheadCloudSize: 13.5
   overheadCloudStep: 40
   overheadCloudAnimationSpeed: 80
-  overheadCloudFlowDirectionX: -0.263
-  overheadCloudFlowDirectionZ: 0.64
-  overheadCloudRemapMin: -0.05
-  overheadCloudRemapMax: 4
+  overheadCloudFlowDirectionX: 1
+  overheadCloudFlowDirectionZ: 1
+  overheadCloudRemapMin: 1
+  overheadCloudRemapMax: 5
   overheadCloudCastShadow: 0
-  overheadCloudShadowClipMask: 0.01
+  overheadCloudShadowClipMask: 0.1
   enableDetailOverlay: 1
   detailOverlayTintColor: {r: 0, g: 0, b: 0, a: 0}
   detailOverlayCubeMap: {fileID: 0}
@@ -103,6 +103,7 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords:
   - DETAIL_OVERLAY
+  - HORIZON_CLOUD
   - OVERHEAD_CLOUD
   - STARS_LAYER_0
   m_LightmapFlags: 4
@@ -118,12 +119,12 @@ Material:
     m_Floats:
     - _OverheadCloudAltitude: 1000
     - _OverheadCloudAnimationSpeed: 80
-    - _OverheadCloudFlowDirectionX: -0.263
-    - _OverheadCloudFlowDirectionZ: 0.64
-    - _OverheadCloudRemapMax: 4
-    - _OverheadCloudRemapMin: -0.05
-    - _OverheadCloudShadowClipMask: 0.01
-    - _OverheadCloudSize: 5.68
+    - _OverheadCloudFlowDirectionX: 1
+    - _OverheadCloudFlowDirectionZ: 1
+    - _OverheadCloudRemapMax: 5
+    - _OverheadCloudRemapMin: 1
+    - _OverheadCloudShadowClipMask: 0.1
+    - _OverheadCloudSize: 13.5
     - _OverheadCloudStep: 40
     m_Colors:
     - _OverheadCloudColor: {r: 1, g: 1, b: 1, a: 0.5647059}
@@ -139,6 +140,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 3129e3b90193a0547900ecf4cf4e9864, type: 3}
   m_ValidKeywords:
   - DETAIL_OVERLAY
+  - HORIZON_CLOUD
   - OVERHEAD_CLOUD
   - STARS_LAYER_0
   m_InvalidKeywords: []
@@ -188,7 +190,7 @@ Material:
     - _HorizonCloudEndPosition: 0.65
     - _HorizonCloudSize: 4.91
     - _HorizonCloudStart: -0.1
-    - _HorizonCloudStartPosition: -0.1
+    - _HorizonCloudStartPosition: -0.01
     - _HorizonCloudStep: 25
     - _HorizonExponent: 3
     - _HorizonStep: 500
@@ -199,13 +201,13 @@ Material:
     - _MoonSoftEdge: 0
     - _OverheadCloudAltitude: 1000
     - _OverheadCloudAnimationSpeed: 80
-    - _OverheadCloudFlowDirectionX: -0.263
-    - _OverheadCloudFlowDirectionZ: 0.64
+    - _OverheadCloudFlowDirectionX: 1
+    - _OverheadCloudFlowDirectionZ: 1
     - _OverheadCloudFlowX: 1
     - _OverheadCloudFlowZ: 1
-    - _OverheadCloudRemapMax: 4
-    - _OverheadCloudRemapMin: -0.05
-    - _OverheadCloudSize: 5.68
+    - _OverheadCloudRemapMax: 5
+    - _OverheadCloudRemapMin: 1
+    - _OverheadCloudSize: 13.5
     - _OverheadCloudStep: 40
     - _StarsDensity0: 0.01
     - _StarsDensity1: 0
@@ -234,12 +236,12 @@ Material:
     - _FogColor: {r: 0, g: 0, b: 0, a: 0}
     - _GroundColor: {r: 1, g: 1, b: 1, a: 1}
     - _HorizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
-    - _HorizonColor: {r: 0.9, g: 1, b: 0.98650056, a: 1}
+    - _HorizonColor: {r: 0.76383054, g: 0.83204335, b: 0.9056604, a: 1}
     - _MoonColor: {r: 0, g: 0, b: 0, a: 0}
     - _MoonDirection: {r: 0, g: 0, b: 1, a: 0}
     - _MoonLightColor: {r: 0, g: 0, b: 0, a: 0}
     - _OverheadCloudColor: {r: 1, g: 1, b: 1, a: 0.5647059}
-    - _SkyColor: {r: 0.2264151, g: 0.6028122, b: 0.9056604, a: 1}
+    - _SkyColor: {r: 0.3401388, g: 0.6329309, b: 0.9150943, a: 1}
     - _StarsColor0: {r: 0, g: 0, b: 0, a: 0}
     - _StarsColor1: {r: 0, g: 0, b: 0, a: 0}
     - _StarsColor2: {r: 0, g: 0, b: 0, a: 0}

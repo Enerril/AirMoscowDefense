@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1217799517228974921}
   - component: {fileID: 3963881790292342659}
   - component: {fileID: 3694913990686755902}
-  - component: {fileID: 3694913990686755901}
   - component: {fileID: 3694913990686755903}
-  m_Layer: 0
+  - component: {fileID: 817710600}
+  - component: {fileID: 7727196119046475130}
+  m_Layer: 11
   m_Name: AlienBigShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,19 +103,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3694913990686755901
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3171225784919266902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02890697, y: 0.024750493, z: 0.013328201}
-  m_Center: {x: 0.00002926588, y: -0.0028676647, z: 0.00485581}
 --- !u!114 &3694913990686755903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,3 +148,31 @@ MonoBehaviour:
   patrolDistance: 50
   TargetPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+--- !u!64 &817710600
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171225784919266902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8283568223418027428, guid: b9a99bc007396474ba092875a100f846, type: 3}
+--- !u!114 &7727196119046475130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171225784919266902}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f5c6becdbd0c84a82fab362079cd7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 0
+  _maxHealth: 1000

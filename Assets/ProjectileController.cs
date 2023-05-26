@@ -10,9 +10,11 @@ public class ProjectileController : MonoBehaviour
     LeanGameObjectPool poolExpl;
     // Start is called before the first frame update
     [SerializeField] float deathTime=2f;
-    WaitForSeconds waitSeconds=new WaitForSeconds(3f);
+    WaitForSeconds waitSeconds=new WaitForSeconds(5f);
     TrailRenderer trailRenderer;
     public float playerDroneSpeed=0f;
+
+    UnitData unitData;
     private void Awake()
     {
         trailRenderer = this.gameObject.GetComponent<TrailRenderer>();
@@ -53,8 +55,23 @@ public class ProjectileController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("HIT");
-        ReturnProjectile();
+        //
+        
+
+        if (collision.gameObject.layer == 11)
+        {
+           // Debug.Log("HIT");
+            unitData = collision.gameObject.GetComponent<UnitData>();
+            unitData.Health = 5;
+
+            ReturnProjectile();
+        }
+        else
+        {
+            ReturnProjectile();
+        }
+        
+        //ReturnProjectile();
     }
 
     void ReturnProjectile()
