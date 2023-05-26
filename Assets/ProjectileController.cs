@@ -12,7 +12,7 @@ public class ProjectileController : MonoBehaviour
     [SerializeField] float deathTime=2f;
     WaitForSeconds waitSeconds=new WaitForSeconds(3f);
     TrailRenderer trailRenderer;
-
+    public float playerDroneSpeed=0f;
     private void Awake()
     {
         trailRenderer = this.gameObject.GetComponent<TrailRenderer>();
@@ -43,7 +43,7 @@ public class ProjectileController : MonoBehaviour
         //var forwardDirection = transform.rotation * Vector3.back;   // this is a bit misleading and i don't quite know how it works but it works
         //var forward = transform.position - forwardDirection;
         //transform.position = Vector3.MoveTowards(transform.position, forward, speed * Time.deltaTime);
-        transform.position += transform.forward * Time.deltaTime * speed;
+        transform.position += transform.forward * Time.deltaTime * (speed+ playerDroneSpeed);
     }
 
     private void OnDisable()

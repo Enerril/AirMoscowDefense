@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &945219756256742798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6436674408177867414}
+  - component: {fileID: 1111035039452114213}
+  m_Layer: 10
+  m_Name: Gun (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6436674408177867414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945219756256742798}
+  m_LocalRotation: {x: 0, y: 0.008726558, z: 0, w: 0.999962}
+  m_LocalPosition: {x: -0.00177, y: 0.00139, z: 0.0003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8744514969568540290}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 1, z: 0}
+--- !u!114 &1111035039452114213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945219756256742798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af20a39298d66c944937ea74772a0cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 8219371291929979960}
+  fireDelay: 0.07
+  offsetAccuracy: 0.01
+  explosionsPool: {fileID: 0}
+  muzzlePool: {fileID: 0}
+  projectilePool: {fileID: 0}
 --- !u!1 &5873615277410966773
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,14 +74,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5873615277410966773}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.00085, z: 0.00466}
+  m_LocalRotation: {x: 0.0155362645, y: 0.000000029802315, z: -0.000000002793967,
+    w: 0.9998793}
+  m_LocalPosition: {x: 0.00169, y: 0.00134, z: 0.00017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8744514969568540290}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.78, y: -1, z: 0}
 --- !u!114 &1681452674000005374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,10 +95,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af20a39298d66c944937ea74772a0cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireDelay: 0
-  offsetAccuracy: {x: 0, y: 0, z: 0}
+  Player: {fileID: 8219371291929979960}
+  fireDelay: 0.07
+  offsetAccuracy: 0.01
   explosionsPool: {fileID: 0}
-  muzzle: {fileID: 0}
+  muzzlePool: {fileID: 0}
   projectilePool: {fileID: 0}
 --- !u!1 &8219371291929979960
 GameObject:
@@ -62,8 +114,7 @@ GameObject:
   - component: {fileID: 7571095044533784045}
   - component: {fileID: 3847471504603420369}
   - component: {fileID: 3847471504603420368}
-  - component: {fileID: 3847471504603420367}
-  - component: {fileID: 3847471504603420372}
+  - component: {fileID: 201304531393059185}
   m_Layer: 10
   m_Name: Dron PLAYER
   m_TagString: MainPlayer
@@ -84,6 +135,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8940526067158862256}
+  - {fileID: 6436674408177867414}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -166,7 +218,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.011674276, y: 0.0052733347, z: 0.009390712}
   m_Center: {x: 0.0000031683594, y: 0.00047010975, z: -0.000016336795}
---- !u!114 &3847471504603420367
+--- !u!114 &201304531393059185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,10 +227,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8219371291929979960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66031ead0b22f6c4bb06d097a90bb968, type: 3}
+  m_Script: {fileID: 11500000, guid: e52c317e723697c499b01a5fdee69803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throttleIncrement: 0.1
+  throttleIncrement: 0.5
   maxThrust: 100
   responsiveness: 2
   cinemachineBrain: {fileID: 0}
@@ -187,28 +239,11 @@ MonoBehaviour:
   roll: 0
   pitch: 0
   yaw: 0
-  speedMult: 5
-  forwardSpeed: 25
-  strafeSpeed: 7.5
-  hoverSpeed: 5
-  lookRateSpeed: 90
-  rollSpeed: 90
-  rollAcceleration: 3.5
---- !u!114 &3847471504603420372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8219371291929979960}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0230f1e041b29f429f9b179b5485572, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardSpeed: 25
-  strafeSpeed: 7.5
-  hoverSpeed: 5
+  speedMult: 30
+  actualSpeed: 0
+  forwardSpeed: 100
+  strafeSpeed: 75
+  hoverSpeed: 50
   lookRateSpeed: 90
   rollSpeed: 90
   rollAcceleration: 3.5

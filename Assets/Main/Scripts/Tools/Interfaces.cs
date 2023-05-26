@@ -8,9 +8,15 @@ public interface IUniqID
 }
 public interface IGridUserSP:IUniqID
 {
-    GameObject myGameObject{get;}
     // Space Partitioning Grid User
+
+    GameObject myGameObject {get;}
+    
     int CurrentTileID { get; set; }
     void EnteredTile(TriggerColliderSpacePartitionTile tile);
     //void ChangeTileID(int TileID);
 }
+
+
+
+

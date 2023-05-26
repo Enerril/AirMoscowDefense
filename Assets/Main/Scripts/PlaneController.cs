@@ -47,7 +47,7 @@ public class PlaneController : MonoBehaviour
 
     #endregion
 
-    bool MouseControl;
+    bool MouseControl=true;
 
 
 
@@ -71,6 +71,7 @@ public class PlaneController : MonoBehaviour
         {
             if (MouseControl) MouseControl = false; else MouseControl = true;
         }
+
         if (MouseControl)
         {
 
@@ -110,6 +111,8 @@ public class PlaneController : MonoBehaviour
         {
             transform.Rotate(-mouseDistance.y * lookRateSpeed * Time.deltaTime, mouseDistance.x * lookRateSpeed * Time.deltaTime, rollInput * rollSpeed * Time.deltaTime, Space.Self);
 
+
+
             transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
             transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime);
         }
@@ -137,7 +140,6 @@ public class PlaneController : MonoBehaviour
         }
 
     }
-
 
     private void HandleInputs()
     {
