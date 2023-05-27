@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 8219371291929979960}
-  fireDelay: 0.07
-  offsetAccuracy: 0.008
+  fireDelay: 0.08
+  offsetAccuracy: 0.005
   explosionsPool: {fileID: 0}
   muzzlePool: {fileID: 0}
   projectilePool: {fileID: 0}
@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 8219371291929979960}
-  fireDelay: 0.07
-  offsetAccuracy: 0.008
+  fireDelay: 0.08
+  offsetAccuracy: 0.005
   explosionsPool: {fileID: 0}
   muzzlePool: {fileID: 0}
   projectilePool: {fileID: 0}
@@ -241,7 +241,7 @@ MonoBehaviour:
   speedMult: 30
   actualSpeed: 0
   forwardSpeed: 100
-  strafeSpeed: 75
+  strafeSpeed: 60
   hoverSpeed: 50
   lookRateSpeed: 90
   rollSpeed: 90

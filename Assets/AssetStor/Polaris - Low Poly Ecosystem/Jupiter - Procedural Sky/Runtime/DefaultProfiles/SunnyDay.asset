@@ -65,10 +65,10 @@ MonoBehaviour:
   moonLightIntensity: 0
   customCloudTexture: {fileID: 0}
   enableHorizonCloud: 1
-  horizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
-  horizonCloudStartPosition: -0.01
-  horizonCloudEndPosition: 0.65
-  horizonCloudSize: 4.91
+  horizonCloudColor: {r: 0.00024318695, g: 0, b: 1, a: 1}
+  horizonCloudStartPosition: -0.33
+  horizonCloudEndPosition: 1
+  horizonCloudSize: 17.97
   horizonCloudStep: 25
   horizonCloudAnimationSpeed: 50
   enableOverheadCloud: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
   overheadCloudFlowDirectionZ: 1
   overheadCloudRemapMin: 1
   overheadCloudRemapMax: 5
-  overheadCloudCastShadow: 0
+  overheadCloudCastShadow: 1
   overheadCloudShadowClipMask: 0.1
   enableDetailOverlay: 1
   detailOverlayTintColor: {r: 0, g: 0, b: 0, a: 0}
@@ -187,10 +187,10 @@ Material:
     - _DetailOverlayRotationSpeed: 0
     - _HorizonCloudAnimationSpeed: 50
     - _HorizonCloudEnd: 0.65
-    - _HorizonCloudEndPosition: 0.65
-    - _HorizonCloudSize: 4.91
+    - _HorizonCloudEndPosition: 1
+    - _HorizonCloudSize: 17.97
     - _HorizonCloudStart: -0.1
-    - _HorizonCloudStartPosition: -0.01
+    - _HorizonCloudStartPosition: -0.33
     - _HorizonCloudStep: 25
     - _HorizonExponent: 3
     - _HorizonStep: 500
@@ -235,7 +235,7 @@ Material:
     - _DetailOverlayTintColor: {r: 0, g: 0, b: 0, a: 0}
     - _FogColor: {r: 0, g: 0, b: 0, a: 0}
     - _GroundColor: {r: 1, g: 1, b: 1, a: 1}
-    - _HorizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HorizonCloudColor: {r: 0.00024318695, g: 0, b: 1, a: 1}
     - _HorizonColor: {r: 0.76383054, g: 0.83204335, b: 0.9056604, a: 1}
     - _MoonColor: {r: 0, g: 0, b: 0, a: 0}
     - _MoonDirection: {r: 0, g: 0, b: 1, a: 0}

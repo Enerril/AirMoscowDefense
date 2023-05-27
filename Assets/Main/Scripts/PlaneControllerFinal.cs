@@ -9,7 +9,8 @@ public class PlaneControllerFinal : MonoBehaviour
     public float maxThrust = 200f;
     public float responsiveness = 10f;
     [SerializeField] CinemachineBrain cinemachineBrain;
-
+    [SerializeField] VelocityBar velocityBar;
+    [SerializeField] VysotaPanel vysotaPanel;
     public float planeMass = 400f;
     [Header("in-game values!")]
     [SerializeField] private float throttle;
@@ -17,7 +18,7 @@ public class PlaneControllerFinal : MonoBehaviour
     [SerializeField] private float pitch;
     [SerializeField] private float yaw;
     [SerializeField] private float speedMult = 1;
-
+    
     private float moveStep;
     private float forwardForce;
     public float actualSpeed;
@@ -62,9 +63,15 @@ public class PlaneControllerFinal : MonoBehaviour
         screenCenter.x = Screen.width * .5f;
         screenCenter.y = Screen.height * .5f;
         Cursor.lockState = CursorLockMode.Confined;
+        vysotaPanel._OnTooLow += PlayerBeyondBorder;
     }
 
     // Update is called once per frame
+
+    void PlayerBeyondBorder()
+    {
+        Debug.Log("TOO FAR");
+    }
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Tab))
@@ -113,9 +120,12 @@ public class PlaneControllerFinal : MonoBehaviour
             
             transform.Rotate(-mouseDistance.y * lookRateSpeed * Time.deltaTime, mouseDistance.x * lookRateSpeed * Time.deltaTime, -rollInput * rollSpeed * Time.deltaTime, Space.Self);
             forwardForce = Mathf.Clamp(throttle, -maxThrust, maxThrust);
-            moveStep = speedMult * Time.deltaTime;
 
-            actualSpeed= forwardForce * moveStep * Time.deltaTime;
+
+            moveStep = speedMult * Time.deltaTime;
+            velocityBar.UpdateVelocityBar(forwardForce, maxThrust);
+            vysotaPanel.UpdateVysotaPanel();
+            actualSpeed = forwardForce * moveStep * Time.deltaTime;
             transform.position += transform.forward * actualSpeed;
             transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime);
             transform.position += (transform.up * activeHoverSpeed * Time.deltaTime);
@@ -161,7 +171,7 @@ public class PlaneControllerFinal : MonoBehaviour
         throttle = Mathf.Clamp(throttle, -maxThrust, maxThrust);
         if (Input.GetKey(KeyCode.C))
         {
-            throttle = Mathf.MoveTowards(throttle, 0f, throttleIncrement);
+            throttle = Mathf.MoveTowards(throttle, 0f, throttleIncrement*1.25f);
             //Debug.Log("space button pushed");
         }
 
@@ -194,5 +204,10 @@ public class PlaneControllerFinal : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("DRONE CRASHED");
+    }
+
+    private void OnDestroy()
+    {
+        vysotaPanel._OnTooLow -= PlayerBeyondBorder;
     }
 }

@@ -56,7 +56,8 @@ public class FlockController : MonoBehaviour
     [SerializeField] float sleepDistance=700f;
     private bool FlockActive;
     bool flockInitialStart;
-
+    private int temp;
+    private int iterator_ReturnCount = 0;
     // Start is called before the first frame update
     private void Start()
     {
@@ -73,7 +74,7 @@ public class FlockController : MonoBehaviour
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 2f));
         DroneInitialSetup();
         //if (bulletsAmount > 5000) bulletsAmount = 5000;
-        bulletsAmount = droneAmount * 20;
+        bulletsAmount = droneAmount * 10;
         bullets = new GameObject[bulletsAmount * 2];
 
         for (int i = 0; i < bulletsAmount; i++)
@@ -323,6 +324,39 @@ public class FlockController : MonoBehaviour
         HandleBulletLiveTime();
     }
 
+    private void IncrementJobValuesEvaluate()
+    {
+
+
+        CheckForNewRandomPoint();
+
+        HandleDronesShooting();
+
+        HandleBulletLiveTimeIncremental();
+
+    }
+    private void HandleBulletLiveTimeIncremental()
+    {
+        if (bullets.Length > 10) temp = bullets.Length / 10;    // we get how many units we iterate per frame over 10 frames;
+        else temp = 1;
+
+        for (int i = 0 + (temp * iterator_ReturnCount); i < temp+(temp * iterator_ReturnCount); i++)
+            {
+                if (bullets[i].activeSelf == true)
+                {
+                    if (bulletLiveTime[i] > 2f)
+                    {
+                        bulletLiveTime[i] = 0;
+                        LeanPool.Despawn(bullets[i]);
+                    }
+                }
+            }
+
+        iterator_ReturnCount++;
+
+        if (iterator_ReturnCount == 10) iterator_ReturnCount = 0;
+
+    }
     private void HandleDronesShooting()
     {
         for (int i = 0; i < flock.Length; i++)
@@ -425,6 +459,7 @@ public class FlockController : MonoBehaviour
 
     private void HandleBulletLiveTime()
     {
+
         for (int i = 0; i < bullets.Length; i++)
         {
             if (bullets[i].activeSelf == true)
@@ -436,6 +471,7 @@ public class FlockController : MonoBehaviour
                 }
             }
         }
+
     }
 
     private void CheckForNewRandomPoint()
