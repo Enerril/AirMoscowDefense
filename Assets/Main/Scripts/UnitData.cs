@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public delegate void NoHealth();
+public delegate void HalfHealth();
 public class UnitData : MonoBehaviour
 {
 
@@ -10,7 +12,9 @@ public class UnitData : MonoBehaviour
     [SerializeField] HealthBar _healthBar;
     public float Health { get { return _health; }set { _health = DamageToHealth(value); } }
     public event NoHealth _OnZeroHealth;
+    public event HalfHealth _OnHalfHealth;
 
+    bool halvedHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +43,17 @@ public class UnitData : MonoBehaviour
         else
         {
             _healthBar.UpdateHealthbar(_maxHealth, Health);
+
+            if (!halvedHealth)
+            {
+                if (_maxHealth / 2 > Health)
+                {
+                    _OnHalfHealth?.Invoke();
+                    halvedHealth = true;
+                }
+            }
+
+
             return _health - v;
         }
 

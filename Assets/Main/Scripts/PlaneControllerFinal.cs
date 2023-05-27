@@ -62,7 +62,9 @@ public class PlaneControllerFinal : MonoBehaviour
     {
         screenCenter.x = Screen.width * .5f;
         screenCenter.y = Screen.height * .5f;
+
         Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
         vysotaPanel._OnTooLow += PlayerBeyondBorder;
     }
 

@@ -24,14 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945219756256742798}
-  m_LocalRotation: {x: 0, y: 0.004363274, z: 0, w: 0.9999905}
+  m_LocalRotation: {x: -0.008726382, y: 0.004363108, z: 0.000038075952, w: 0.99995244}
   m_LocalPosition: {x: -0.00177, y: 0.00139, z: 0.0003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8744514969568540290}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0.5, z: 0}
+  m_LocalEulerAnglesHint: {x: -1, y: 0.5, z: 0}
 --- !u!114 &1111035039452114213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,14 +74,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5873615277410966773}
-  m_LocalRotation: {x: 0, y: -0.004363368, z: 0, w: 0.9999905}
+  m_LocalRotation: {x: -0.008726382, y: -0.0043632016, z: -0.00003807677, w: 0.99995244}
   m_LocalPosition: {x: 0.00169, y: 0.00134, z: 0.00017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8744514969568540290}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0.5, z: 0}
+  m_LocalEulerAnglesHint: {x: -1, y: -0.5, z: 0}
 --- !u!114 &1681452674000005374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +233,8 @@ MonoBehaviour:
   maxThrust: 100
   responsiveness: 2
   cinemachineBrain: {fileID: 0}
+  velocityBar: {fileID: 0}
+  vysotaPanel: {fileID: 0}
   planeMass: 400
   throttle: 0
   roll: 0

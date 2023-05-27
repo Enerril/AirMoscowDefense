@@ -8,6 +8,8 @@ public class AlienShipController : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] GameObject BoomBoom;
+    [SerializeField] GameObject kamikaza;
+
     Camera cam;
     FloatingOrigin floatingOrigin;
     [SerializeField] Transform playerTransform;
@@ -19,7 +21,7 @@ public class AlienShipController : MonoBehaviour
     [SerializeField] float rotateSpeed=1f;
     [SerializeField] float patrolDistance = 20f;
     Rigidbody rb;
-
+    [SerializeField] float spawnEnemyDelay = 10f;
 
     float lerpVCurrent, lerpVTarget;
 
@@ -32,6 +34,7 @@ public class AlienShipController : MonoBehaviour
     public Vector3 velocity;
     WaitForSeconds patrolDelay = new WaitForSeconds(5f);
     WaitForSeconds boomDelay = new WaitForSeconds(.2f);
+    WaitForSeconds enemySpawnDelay = new WaitForSeconds(10f);
     float explosionCounter;
 
     // Start is called before the first frame update
@@ -55,8 +58,34 @@ public class AlienShipController : MonoBehaviour
         TargetPosition = upPoint;
         Invoke("PatrolStart", Random.Range(0.5f, 2.5f));
         unitData._OnZeroHealth += DeathProcess;
+        unitData._OnHalfHealth += SpawnEnemyNowThree;
+        enemySpawnDelay = new WaitForSeconds(spawnEnemyDelay+Random.Range(0f,10f));
+
+        StartCoroutine(SpawnEnemy());
+    }
+    IEnumerator SpawnEnemy()
+    {
+        while (true)
+        {
+            yield return enemySpawnDelay;
+            SpawnEnemyNow();
+
+
+        }
     }
 
+
+    void SpawnEnemyNow()
+    {
+        var k = transform.position + Random.onUnitSphere * 100;
+        Instantiate(kamikaza, k, Quaternion.identity);
+    }
+
+    void SpawnEnemyNowThree()
+    {
+        var k = transform.position + Random.onUnitSphere * 100;
+        Instantiate(kamikaza, k, Quaternion.identity);
+    }
     void DeathProcess()
     {
         if (!deathbool)
@@ -190,6 +219,7 @@ public class AlienShipController : MonoBehaviour
     {
         floatingOrigin._OnOriginMoved -= AdjustPatrolVectors;
         unitData._OnZeroHealth -= DeathProcess;
+        unitData._OnHalfHealth -= SpawnEnemyNowThree;
     }
 
 

@@ -36,7 +36,8 @@ public class ProjectileController : MonoBehaviour
     IEnumerator Die()
     {
         yield return waitSeconds;
-        ReturnProjectile();
+        //ReturnProjectile();
+        LeanPool.Despawn(this.gameObject);
     }
 
 
