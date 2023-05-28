@@ -7,6 +7,7 @@ TagManager:
   - MainPlayer
   - FxTemporaire
   - PoolExpl
+  - GAMEMANAGER
   layers:
   - Default
   - TransparentFX

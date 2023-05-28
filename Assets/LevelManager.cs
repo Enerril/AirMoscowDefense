@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] TextMeshProUGUI tmp_lives;
     PlaneControllerFinal planeControllerFinal;
-
+    int shipsDestroyed;
     private void Awake()
     {
         StaticSceneData.InitValues(); Time.timeScale = 1;
@@ -22,6 +22,21 @@ public class LevelManager : MonoBehaviour
         planeControllerFinal = player.GetComponent<PlaneControllerFinal>();
         planeControllerFinal._OnPlayerDeath += UpdateLivesUI;
         tmp_lives.text = droneLives.ToString();
+    }
+    public void CountShips()
+    {
+        shipsDestroyed++;
+        if (shipsDestroyed >= 3)
+        {
+            StartCoroutine(pobeda());
+        }
+
+    }
+
+    IEnumerator pobeda()
+    {
+        yield return new WaitForSeconds(1f);
+        SoundController.Instance.PlaySound(4);
     }
 
     void UpdateLivesUI()
@@ -44,7 +59,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator RevivePlayer()
     {
         player.transform.position = this.transform.position + Random.insideUnitSphere * 200;
-        player.transform.position = new Vector3(player.transform.position.x,100f,player.transform.position.z);
+        player.transform.position = new Vector3(player.transform.position.x,150f,player.transform.position.z);
         yield return new WaitForSeconds(.5f);
         planeControllerFinal.OpenDeathScreen();
 

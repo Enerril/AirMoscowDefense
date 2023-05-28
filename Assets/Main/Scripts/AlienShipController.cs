@@ -223,9 +223,11 @@ public class AlienShipController : MonoBehaviour
     private void OnDestroy()
     {
         SoundController.Instance.PlaySound(3);
+        GameObject.FindWithTag("GAMEMANAGER").GetComponent<LevelManager>().CountShips();
         floatingOrigin._OnOriginMoved -= AdjustPatrolVectors;
         unitData._OnZeroHealth -= DeathProcess;
         unitData._OnHalfHealth -= SpawnEnemyNowThree;
+
     }
 
 

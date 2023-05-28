@@ -14,7 +14,7 @@ public class KamikazaController : MonoBehaviour
     [SerializeField] UnitData _unitData;
     [SerializeField] GameObject explosion;
     [SerializeField] HealthBar healthBar;
-
+    AudioSource audioSource;
     
 
     // Start is called before the first frame update
@@ -25,7 +25,7 @@ public class KamikazaController : MonoBehaviour
         _unitData._OnZeroHealth += Explode;
         _rotateSpeed += Random.Range(1f, 10f);
         _speed += Random.Range(1f, 10f);
-
+       // audioSource=GetComponent<AudioSource>();
         planeController = player.GetComponent<PlaneControllerFinal>();
     }
 
@@ -63,7 +63,7 @@ public class KamikazaController : MonoBehaviour
 
     private void OnDestroy()
     {
-
+       // audioSource.Stop();
         SoundController.Instance.PlaySound(3);
         _unitData._OnZeroHealth -= Explode;
     }
