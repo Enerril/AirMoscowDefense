@@ -21,7 +21,7 @@ public class AlienShipController : MonoBehaviour
     [SerializeField] float rotateSpeed=1f;
     [SerializeField] float patrolDistance = 20f;
     Rigidbody rb;
-    [SerializeField] float spawnEnemyDelay = 10f;
+    [SerializeField] float spawnEnemyDelay = 15f;
 
     float lerpVCurrent, lerpVTarget;
 
@@ -34,7 +34,7 @@ public class AlienShipController : MonoBehaviour
     public Vector3 velocity;
     WaitForSeconds patrolDelay = new WaitForSeconds(5f);
     WaitForSeconds boomDelay = new WaitForSeconds(.2f);
-    WaitForSeconds enemySpawnDelay = new WaitForSeconds(10f);
+    WaitForSeconds enemySpawnDelay = new WaitForSeconds(15f);
     float explosionCounter;
 
     // Start is called before the first frame update
@@ -59,7 +59,7 @@ public class AlienShipController : MonoBehaviour
         Invoke("PatrolStart", Random.Range(0.5f, 2.5f));
         unitData._OnZeroHealth += DeathProcess;
         unitData._OnHalfHealth += SpawnEnemyNowThree;
-        enemySpawnDelay = new WaitForSeconds(spawnEnemyDelay+Random.Range(0f,10f));
+        enemySpawnDelay = new WaitForSeconds(spawnEnemyDelay+Random.Range(0f,20f));
 
         StartCoroutine(SpawnEnemy());
     }
@@ -68,6 +68,7 @@ public class AlienShipController : MonoBehaviour
         while (true)
         {
             yield return enemySpawnDelay;
+
             SpawnEnemyNow();
 
 
@@ -82,8 +83,12 @@ public class AlienShipController : MonoBehaviour
     }
 
     void SpawnEnemyNowThree()
-    {
+    {   // or 2. DRY?? NEVER HEARD OF...
         var k = transform.position + Random.onUnitSphere * 100;
+        Instantiate(kamikaza, k, Quaternion.identity);
+        k = transform.position + Random.onUnitSphere * 100;
+        Instantiate(kamikaza, k, Quaternion.identity);
+        k = transform.position + Random.onUnitSphere * 100;
         Instantiate(kamikaza, k, Quaternion.identity);
     }
     void DeathProcess()
@@ -217,6 +222,7 @@ public class AlienShipController : MonoBehaviour
 
     private void OnDestroy()
     {
+        SoundController.Instance.PlaySound(3);
         floatingOrigin._OnOriginMoved -= AdjustPatrolVectors;
         unitData._OnZeroHealth -= DeathProcess;
         unitData._OnHalfHealth -= SpawnEnemyNowThree;

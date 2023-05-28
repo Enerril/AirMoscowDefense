@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class KamikazaController : MonoBehaviour
 {
     GameObject player;
-
+    PlaneControllerFinal planeController;
     [SerializeField] float _rotateSpeed = 5f;
     [SerializeField] float _speed = 5f;
     [SerializeField] UnitData _unitData;
     [SerializeField] GameObject explosion;
     [SerializeField] HealthBar healthBar;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +25,8 @@ public class KamikazaController : MonoBehaviour
         _unitData._OnZeroHealth += Explode;
         _rotateSpeed += Random.Range(1f, 10f);
         _speed += Random.Range(1f, 10f);
+
+        planeController = player.GetComponent<PlaneControllerFinal>();
     }
 
     // Update is called once per frame
@@ -37,9 +44,12 @@ public class KamikazaController : MonoBehaviour
         transform.position += transform.forward * _speed * Time.fixedDeltaTime;
 
 
-        if (Vector3.Distance(player.transform.position, this.transform.position) < 25f)
+        if (Vector3.Distance(player.transform.position, this.transform.position) < 15f)
         {
             // explode and kill player
+            Explode();
+            planeController.PlayerDeath();
+            
         }
     }
 
@@ -53,6 +63,8 @@ public class KamikazaController : MonoBehaviour
 
     private void OnDestroy()
     {
+
+        SoundController.Instance.PlaySound(3);
         _unitData._OnZeroHealth -= Explode;
     }
 

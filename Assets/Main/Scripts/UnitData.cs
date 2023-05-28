@@ -4,6 +4,7 @@ using UnityEngine;
 
 public delegate void NoHealth();
 public delegate void HalfHealth();
+
 public class UnitData : MonoBehaviour
 {
 

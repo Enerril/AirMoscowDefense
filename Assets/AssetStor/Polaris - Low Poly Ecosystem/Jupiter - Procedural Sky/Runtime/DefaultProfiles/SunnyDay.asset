@@ -81,7 +81,7 @@ MonoBehaviour:
   overheadCloudFlowDirectionZ: 1
   overheadCloudRemapMin: 1
   overheadCloudRemapMax: 5
-  overheadCloudCastShadow: 1
+  overheadCloudCastShadow: 0
   overheadCloudShadowClipMask: 0.1
   enableDetailOverlay: 1
   detailOverlayTintColor: {r: 0, g: 0, b: 0, a: 0}

@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using MeshDecimator;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
+public delegate void PlayerDeath();
+public delegate void ToggleShooting(int i);
 public class PlaneControllerFinal : MonoBehaviour
 {
     public float throttleIncrement = 0.1f;
@@ -11,6 +16,9 @@ public class PlaneControllerFinal : MonoBehaviour
     [SerializeField] CinemachineBrain cinemachineBrain;
     [SerializeField] VelocityBar velocityBar;
     [SerializeField] VysotaPanel vysotaPanel;
+    [SerializeField] Image playerDeathImage;
+    [SerializeField] GameObject Explosion;
+    [SerializeField] GameObject PauseUI;
     public float planeMass = 400f;
     [Header("in-game values!")]
     [SerializeField] private float throttle;
@@ -18,11 +26,15 @@ public class PlaneControllerFinal : MonoBehaviour
     [SerializeField] private float pitch;
     [SerializeField] private float yaw;
     [SerializeField] private float speedMult = 1;
-    
+    public event PlayerDeath _OnPlayerDeath;
+    public event ToggleShooting _OnToggleShooting;
     private float moveStep;
     private float forwardForce;
     public float actualSpeed;
     Rigidbody rb;
+    float UI_button_delay;
+    MeshRenderer myMesh;
+
     private float responseModifier
     {
         get
@@ -49,7 +61,126 @@ public class PlaneControllerFinal : MonoBehaviour
     #endregion
 
     bool MouseControl = true;
+    public bool playerDead;
+    public bool screenOpened;
+    public bool pauseMenuActive;
 
+    public void PlayerDeath()
+    {
+        if (!playerDead)
+        {
+
+
+            playerDead = true;
+            myMesh.enabled = false;
+            Instantiate(Explosion, transform.position, Quaternion.identity);
+            _OnToggleShooting?.Invoke(0);
+            StartCoroutine(CloseScreenDelay());
+        }
+       
+
+    }
+
+    IEnumerator CloseScreenDelay()
+    {
+        yield return new WaitForSeconds(.5f);
+        StartCoroutine(CloseScreen());
+
+    }
+
+    IEnumerator PlayerRebirth()
+    {
+
+        yield return new WaitForSeconds(2f);
+        DeathScreenHandle();
+
+    }
+
+
+    public void DeathScreenHandle()
+    {
+
+        if (!playerDead && !screenOpened)
+        {
+            // open screen
+            StartCoroutine(OpenScreen());
+
+            
+        }
+        else if (playerDead && screenOpened)
+        {
+            // close screen
+
+            StartCoroutine(CloseScreen());
+            
+        }
+
+
+
+    }
+
+    public void OpenDeathScreen()
+    {
+        myMesh.enabled = true;
+        StartCoroutine(OpenScreen());
+    }
+    IEnumerator OpenScreen()
+    {
+        bool work = true;
+        float current = 1f;
+        
+        while (work)
+        {
+
+
+            yield return null;
+
+            current = Mathf.MoveTowards(current, 0, 1f * Time.deltaTime);
+
+            playerDeathImage.fillAmount = current / 1;
+
+            if (current == 0) {
+                Debug.Log(" OPEN SCREEN COROT STOPPED");
+                _OnToggleShooting?.Invoke(1);
+                playerDead = false;
+                screenOpened = true;
+                yield break;
+            }
+
+        }
+      
+        
+    }
+
+    IEnumerator CloseScreen()
+    {
+        bool work = true;
+        float current = 0f;
+
+        while (work)
+        {
+
+
+            yield return null;
+
+            current = Mathf.MoveTowards(current, 1, 1f * Time.deltaTime);
+
+            playerDeathImage.fillAmount = current / 1;
+
+            if (current == 1)
+            {
+                Debug.Log(" CLOSE SCREEN COROT STOPPED");
+                _OnPlayerDeath?.Invoke();
+                _OnToggleShooting?.Invoke(0);
+                playerDead = true;
+                screenOpened = false;
+                yield break;
+            }
+
+        }
+
+
+    }
 
 
     private void Awake()
@@ -66,22 +197,31 @@ public class PlaneControllerFinal : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         vysotaPanel._OnTooLow += PlayerBeyondBorder;
+        myMesh = GetComponent<MeshRenderer>();
+        DeathScreenHandle();
     }
 
     // Update is called once per frame
 
     void PlayerBeyondBorder()
     {
-        Debug.Log("TOO FAR");
+        if (!playerDead)
+        {
+            PlayerDeath();
+        }
+        
     }
     void Update()
     {
+
+        
+
         if (Input.GetKeyUp(KeyCode.Tab))
         {
             if (MouseControl) MouseControl = true;// else MouseControl = true;
         }
 
-        if (MouseControl)
+        if (MouseControl && !playerDead)
         {
             HandleInputs();
 
@@ -117,7 +257,7 @@ public class PlaneControllerFinal : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (MouseControl)
+        if (MouseControl && !playerDead)
         {
             
             transform.Rotate(-mouseDistance.y * lookRateSpeed * Time.deltaTime, mouseDistance.x * lookRateSpeed * Time.deltaTime, -rollInput * rollSpeed * Time.deltaTime, Space.Self);
@@ -137,7 +277,7 @@ public class PlaneControllerFinal : MonoBehaviour
 
         else
         {
-
+            /*
             //Debug.Log(throttle);
             forwardForce = Mathf.Clamp(throttle, 0f, maxThrust);
             moveStep = speedMult * Time.deltaTime;
@@ -154,9 +294,10 @@ public class PlaneControllerFinal : MonoBehaviour
 
             transform.Rotate(Vector3.right, pitch * responseModifier / 2 * Time.deltaTime);
             //cinemachineBrain.ManualUpdate();
-
+            */
         }
 
+      
     }
 
     private void HandleInputs()
@@ -177,9 +318,47 @@ public class PlaneControllerFinal : MonoBehaviour
             //Debug.Log("space button pushed");
         }
 
+        if (Input.GetKeyUp(KeyCode.Escape) )
+        {
+            if (!pauseMenuActive )
+            {
+                UI_EnablePauseMenu();
+            }
+            else
+            {
+                UI_DisablePauseMenu();
+            }
+            //UI_button_delay = 0;
+        }
+
+
     }
 
+    void UI_EnablePauseMenu()
+    {
+        Cursor.visible = true;
+        Cursor.lockState= CursorLockMode.None;
+        Time.timeScale = 0;
+        PauseUI.SetActive(true);
+        pauseMenuActive=true;
 
+    }
+    public void UI_DisablePauseMenu()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        Time.timeScale = 1;
+        PauseUI.SetActive(false);
+        pauseMenuActive = false;
+
+    }
+    public void UI_GO_HANGAR()
+    {
+        SoundController.Instance.StopMusic();
+        SoundController.Instance.PlayMusic(0);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
     /*
     private void FixedUpdate()
     {
@@ -205,7 +384,7 @@ public class PlaneControllerFinal : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("DRONE CRASHED");
+        PlayerDeath();
     }
 
     private void OnDestroy()

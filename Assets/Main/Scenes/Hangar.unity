@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GO PLAY
+  m_text: "1 \u0423\u0440\u043E\u0432\u0435\u043D\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c42b22c27f907145b78bcb7aee36d89, type: 2}
   m_sharedMaterial: {fileID: 4655291027910556970, guid: 7c42b22c27f907145b78bcb7aee36d89,
@@ -939,10 +939,10 @@ RectTransform:
   m_Father: {fileID: 994769052}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.031125002, y: 0.05740741}
-  m_AnchorMax: {x: 0.19800001, y: 0.110148154}
-  m_AnchoredPosition: {x: 833, y: 197}
-  m_SizeDelta: {x: -161, y: -27}
+  m_AnchorMin: {x: 0.71566683, y: 0.8157408}
+  m_AnchorMax: {x: 0.88622934, y: 0.8734815}
+  m_AnchoredPosition: {x: -2, y: 9.5}
+  m_SizeDelta: {x: -167, y: -32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1401867853
 MonoBehaviour:

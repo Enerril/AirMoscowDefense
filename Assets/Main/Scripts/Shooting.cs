@@ -18,10 +18,12 @@ public class Shooting : MonoBehaviour
     float addedSpeed;
     ProjectileController projectileController;
     PlaneControllerFinal playerController;
+    bool canShoot=false;
     // Start is called before the first frame update
     void Start()
     {
         playerController = Player.GetComponent<PlaneControllerFinal>();
+        playerController._OnToggleShooting += ToggleShooting;
         //muzzlePS=muzzle.GetComponent<ParticleSystem>();
         //projectileController = Player.GetComponent<ProjectileController>();
     }
@@ -29,37 +31,56 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeSinceLastShot += Time.deltaTime;
-
-        if (Input.GetButton("Fire1") && timeSinceLastShot> fireDelay)
+        if (canShoot)
         {
+            timeSinceLastShot += Time.deltaTime;
 
-            addedSpeed = playerController.actualSpeed;
+            if (Input.GetButton("Fire1") && timeSinceLastShot > fireDelay)
+            {
+
+                addedSpeed = playerController.actualSpeed;
 
 
-            //explosionsPool.Spawn();
-            //muzzlePool.Spawn();
-            ShootThyBullet(addedSpeed);
-           // ShootThyBullet();
-            //proj.transform.rotation.x += UnityEngine.Random.Range(-offsetAccuracy, -offsetAccuracy);
+                //explosionsPool.Spawn();
+                //muzzlePool.Spawn();
+                ShootThyBullet(addedSpeed);
+                // ShootThyBullet();
+                //proj.transform.rotation.x += UnityEngine.Random.Range(-offsetAccuracy, -offsetAccuracy);
 
-            timeSinceLastShot = 0;
+                timeSinceLastShot = 0;
 
+            }
+            else
+            {
+                //Debug.Log("HERE");
+
+            }
         }
-        else
+        
+        
+    }
+    void ToggleShooting(int i)
+    {
+        if (i==0)
         {
-            //Debug.Log("HERE");
-           
+            Debug.Log("CANT SHOOT");
+            canShoot = false;
+        }
+
+        else if(i==1) {
+
+            Debug.Log("GO SHOOT");
+            canShoot = true;
+
         }
         
     }
-
     private void ShootThyBullet(float deltaSpeed)
     {
 
 
 
-
+        SoundController.Instance.PlaySound(Random.Range(1,2));
         proj = projectilePool.Spawn(transform.position, Quaternion.identity, null);
         muzzle = muzzlePool.Spawn(transform.position, Quaternion.identity, this.transform);
         // proj.transform.rotation=transform.rotation; - working
@@ -84,5 +105,10 @@ public class Shooting : MonoBehaviour
     private void LateUpdate()
     {
       
+    }
+
+    private void OnDestroy()
+    {
+        playerController._OnToggleShooting -= ToggleShooting;
     }
 }

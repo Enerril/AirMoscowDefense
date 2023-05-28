@@ -14,6 +14,8 @@ public class ButtonsUI : MonoBehaviour
 
     public void GoLevel1()
     {
+        SoundController.Instance.StopMusic();
+        SoundController.Instance.PlayMusic(Random.Range(1,3));
         SceneManager.LoadScene(2);
     }
 
